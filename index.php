@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Tareas</title>
-    <link rel="icon" href="assets/img/to-do.png" type="image/png">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <meta name="theme-color" content="#007bff">
     <link rel="manifest" href="manifest.json">
@@ -14,10 +14,10 @@
 </head>
 
 <body>
-    <div id="splash-screen">
-  <img src="assets/img/to-do.png" alt="Logo" class="splash-logo">
-  <p id="splash-greeting">Cargando...</p>
-</div>
+    <!-- <div id="splash-screen">
+        <img src="assets/img/to-do.png" alt="Logo" class="splash-logo">
+        <p id="splash-greeting">Cargando...</p>
+    </div>-->
 
     <header>
         <div class="header-top">
@@ -146,11 +146,13 @@
             <div id="task-completed">Completadas: 0</div>|
             <div id="task-pending">Pendientes: 0</div>
         </div>
-        <div class="footer-bottom">            
-            <span>© 2025 ZCAYD & AZ. Todos los derechos reservados.</span>
+        <div class="footer-bottom">
+            <span>© 2025 ZCAYD - & A.Z.</span>
+            <br>
+            <span>Todos los derechos reservados.</span>
             <br>
             <!-- Coloca esto en tu HTML principal -->
-<button id="btn-install" style="display: none;"></button>
+            <button id="btn-install" style="display: none;"></button>
 
 
         </div>
