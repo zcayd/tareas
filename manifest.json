@@ -1,13 +1,17 @@
 {
   "name": "Mis Tareas",
   "short_name": "Tareas",
-  "id": "/",
-  "start_url": "./",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["standalone", "window-controls-overlay"],
+  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#007bff",
   "description": "Organiza tus tareas diarias",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
   "icons": [
     {
       "src": "assets/img/to-do.png",
@@ -15,7 +19,7 @@
       "type": "image/png"
     },
     {
-      "src": "assets/icons/icon-512x512.png",
+      "src": "assets/img/to-do.png",
       "sizes": "512x512",
       "type": "image/png"
     }
