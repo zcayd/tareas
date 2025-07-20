@@ -1,6 +1,6 @@
 {
   "name": "Mis Tareas",
-  "short_name": "Agenda",
+  "short_name": "Tareas",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
