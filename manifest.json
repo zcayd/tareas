@@ -1,6 +1,7 @@
 {
   "name": "Mis Tareas",
   "short_name": "Tareas",
+  "id": "/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -14,7 +15,7 @@
       "type": "image/png"
     },
     {
-      "src": "assets/img/to-do.png",
+      "src": "assets/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
