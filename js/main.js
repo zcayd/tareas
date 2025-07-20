@@ -147,6 +147,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  
+
   // Detectar estado inicial
   window.addEventListener('load', updateConnectionStatus);
 
