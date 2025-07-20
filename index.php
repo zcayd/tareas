@@ -40,7 +40,7 @@
                     <div class="search-bar">
                         <input type="text" id="search-input"
                             placeholder="Buscar título, descripción, categoría o fecha" />
-                        <button id="btn-clear-filters">🗙</button>
+                        <button id="btn-clear-filters"><img src="assets/icons/danger.svg" alt=""></button>
                     </div>
                     <div>
                         <select id="filter-category">
