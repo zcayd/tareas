@@ -221,27 +221,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 //SALUDO INICIAL
-window.addEventListener('load', () => {
-  const greetingEl = document.getElementById('splash-greeting');
-  const hour = new Date().getHours();
-  let greeting = '';
-
-  if (hour >= 5 && hour < 12) {
-    greeting = '¡Buenos días!';
-  } else if (hour >= 12 && hour < 18) {
-    greeting = '¡Buenas tardes!';
-  } else {
-    greeting = '¡Buenas noches!';
-  }
-
-  greetingEl.textContent = greeting;
-
-  // Opcional: remover splash después de animación
-  setTimeout(() => {
-    const splash = document.getElementById('splash-screen');
-    if (splash) splash.remove();
-  }, 4000); // duración total splash
-});
+//window.addEventListener('load', () => {
+//  const greetingEl = document.getElementById('splash-greeting');
+//  const hour = new Date().getHours();
+//  let greeting = '';
+//
+//  if (hour >= 5 && hour < 12) {
+//    greeting = '¡Buenos días!';
+//  } else if (hour >= 12 && hour < 18) {
+//    greeting = '¡Buenas tardes!';
+//  } else {
+//    greeting = '¡Buenas noches!';
+//  }
+//
+//  greetingEl.textContent = greeting;
+//
+//  // Opcional: remover splash después de animación
+//  setTimeout(() => {
+//    const splash = document.getElementById('splash-screen');
+//    if (splash) splash.remove();
+//  }, 4000); // duración total splash
+//});
 
 
 
