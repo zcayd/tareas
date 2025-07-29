@@ -100,10 +100,10 @@ export function renderTasksGroupedByDate(tasks, year, month) {
       const completeBtn = document.createElement('button');
       completeBtn.classList.add('btn-complete');
       if (task.completed) {
-        completeBtn.innerHTML = '✅ Listo';
+        completeBtn.innerHTML = '✅';
         completeBtn.classList.add('done');
       } else {
-        completeBtn.innerHTML = '❌ Pendiente';
+        completeBtn.innerHTML = '❌';
         completeBtn.classList.add('pending');
       }
       completeBtn.addEventListener('click', () => {
