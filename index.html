@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark light">
+
 
     <title>Mis Tareas</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -166,51 +166,110 @@
             <button type="button" id="btn-close-modal" class="btn-close-modal">
                 <img src="assets/icons/danger.svg" alt="Cerrar" class="icon-btn">
             </button>
-            <h2 id="modal-title">Nueva Tarea</h2>
+            <h2 id="modal-title" class="titleModal">Nueva Tarea</h2>
+            <hr>
             <form id="task-form" class="form-task">
-                <div class="input-with-speech">
-                    <input type="text" id="task-title" name="titulo" placeholder="Título" class="input-titulo" required>
-                    <button type="button" id="btn-speech-title" class="btn-speech"></button>
-                    <button type="button" id="btn-clear-title" class="btn-clear-input">
-                        <img src="assets/icons/trash.svg" alt="Borrar" class="icon-btn">
-                    </button>
-                </div>
-                <div class="row-group">
-                    <select id="task-category" name="categoria">
-                        <option value="">📂 Categoría</option>
-                        <option value="personal">🔸Personal</option>
-                        <option value="trabajo">🔸Trabajo</option>
-                        <option value="estudio">🔸Estudio</option>
-                        <option value="compra">🔸Compra</option>
-                        <option value="salud">🔸Salud</option>
-                        <option value="iglesia">🔸Iglesia</option>
-                        <option value="visita">🔸Visita</option>
-                        <option value="otras">🔸Otras</option>
-                    </select>
-                    <select name="prioridad" id="task-priority">
-                        <option value="">⚠️ Prioridad</option>
-                        <option value="alta">🔸Alta</option>
-                        <option value="media">🔸Media</option>
-                        <option value="baja">🔸Baja</option>
-                    </select>
-                </div>
-                <div class="row-group">
-                    <input type="date" id="task-date" name="fecha" />
-                    <input type="time" id="task-time" name="hora" />
-                </div>
-                <div class="input-with-speech">
-                    <textarea id="task-desc" name="descripcion" placeholder="Descripción"></textarea>
 
-
-                    <button type="button" id="btn-speech-desc" class="btn-speech"></button>
-                    <button type="button" id="btn-clear-desc" class="btn-clear-input"><img src="assets/icons/trash.svg"
-                            alt="Borrar" class="icon-btn"></button>
+                <!-- Título -->
+                <div class="input-wrapper">
+                    <label for="task-title" class="labelTitle">Título</label>
+                    <div class="input-with-icon">
+                        <div class="icon-box">
+                            <img src="assets/icons/square-plus.svg" alt="Título">
+                        </div>
+                        <input type="text" id="task-title" name="titulo" placeholder="Título" class="input-titulo"
+                            required>
+                        <button type="button" id="btn-speech-title" class="btn-speech"></button>
+                        <button type="button" id="btn-clear-title" class="btn-clear-input">
+                            <img src="assets/icons/trash.svg" alt="Borrar" class="icon-btn">
+                        </button>
+                    </div>
                 </div>
+
+                <!-- Categoría y Prioridad -->
+                <div class="row-group">
+                    <div class="input-wrapper">
+                        <label for="task-category">Categoría</label>
+                        <div class="input-with-icon">
+                            <div class="icon-box">
+                                <img src="assets/icons/folder.svg" alt="Categoría">
+                            </div>
+                            <select id="task-category" name="categoria">
+                                <option value="">Categoría</option>
+                                <option value="personal">🔸Personal</option>
+                                <option value="trabajo">🔸Trabajo</option>
+                                <option value="estudio">🔸Estudio</option>
+                                <option value="compra">🔸Compra</option>
+                                <option value="salud">🔸Salud</option>
+                                <option value="iglesia">🔸Iglesia</option>
+                                <option value="visita">🔸Visita</option>
+                                <option value="otras">🔸Otras</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="task-priority">Prioridad</label>
+                        <div class="input-with-icon">
+                            <div class="icon-box">
+                                <img src="assets/icons/triangle-alert.svg" alt="Prioridad">
+                            </div>
+                            <select id="task-priority" name="prioridad">
+                                <option value="">Prioridad</option>
+                                <option value="alta">🔸Alta</option>
+                                <option value="media">🔸Media</option>
+                                <option value="baja">🔸Baja</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fecha y Hora -->
+                <div class="row-group">
+                    <div class="input-wrapper">
+                        <label for="task-date">Fecha</label>
+                        <div class="input-with-icon">
+                            <div class="icon-box">
+                                <img src="assets/icons/calendar.svg" alt="Fecha">
+                            </div>
+                            <input type="date" id="task-date" name="fecha" placeholder="Fecha">
+                        </div>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="task-time">Hora</label>
+                        <div class="input-with-icon">
+                            <div class="icon-box">
+                                <img src="assets/icons/clock.svg" alt="Hora">
+                            </div>
+                            <input type="time" id="task-time" name="hora" placeholder="Hora">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Descripción -->
+                <div class="input-wrapper">
+                    <label for="task-desc">Descripción</label>
+                    <div class="input-with-icon">
+                        <div class="icon-box">
+                            <img src="assets/icons/align-left.svg" alt="Descripción">
+                        </div>
+                        <textarea id="task-desc" name="descripcion" placeholder="Descripción"></textarea>
+                        <button type="button" id="btn-speech-desc" class="btn-speech"></button>
+                        <button type="button" id="btn-clear-desc" class="btn-clear-input">
+                            <img src="assets/icons/trash.svg" alt="Borrar" class="icon-btn">
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Botones -->
                 <div class="row-group btn-group">
                     <button type="button" id="btn-cancel" class="btn-cancelar">Cancelar</button>
                     <button type="submit" id="btn-save" class="btn-guardar">Guardar</button>
                 </div>
+
             </form>
+
             <div id="dictado-preview-global" class="dictado-flotante"></div>
 
         </div>

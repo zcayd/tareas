@@ -72,8 +72,6 @@
   --border-radius: 4px;
   --transition-speed: 0.3s;
   --op: 0.5
-
-  color-scheme: light dark;
 }
 
 .theme-picker {
@@ -194,6 +192,7 @@ body.dark-mode {
 hr {
   border-color: var(--theme);
 }
+
 .borderTheme {
   border: 2px solid var(--theme) !important;
 }
@@ -436,6 +435,8 @@ button:hover {
 
 #search-input {
   padding: 0.5rem;
+  background-color: #010811;
+  color: var(--bg-white, #fff);
   border-radius: 6px;
   min-width: 0;
   width: 70% !important;
@@ -579,6 +580,11 @@ main {
   color: var(--bg-white);
   border: 2px solid var(--theme);
 }
+.titleModal {
+  display: flex;
+  justify-content: center;
+}
+
 
 .btn-close-modal {
   position: absolute;
@@ -1053,6 +1059,10 @@ button.active {
   select {
     width: 100% !important;
   }
+
+    .input-wrapper {
+    flex: 1 1 100%;
+  }
 }
 
 
@@ -1065,7 +1075,7 @@ button.active {
 .form-task {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 5px;
 }
 
 
@@ -1078,9 +1088,11 @@ select {
   padding: 6px 10px;
   border: 1px solid var(--theme);
   border-radius: 6px;
+  background-color: #010811;
+  color: var(--bg-white, #fff);
   font-size: 1em;
   flex-grow: 1;
-   color-scheme: dark;
+  color-scheme: dark;
 }
 
 
@@ -1088,6 +1100,8 @@ textarea {
   padding: 5px;
   border: 1px solid var(--theme);
   border-radius: 6px;
+  background-color: #010811;
+  color: var(--bg-white, #fff);
   font-size: 1.2em;
   flex-grow: 1;
   resize: none;
@@ -1099,6 +1113,84 @@ textarea {
 .input-titulo {
   width: 80%;
 }
+
+
+
+
+
+
+.labelTitle{
+  margin-top: 10px;
+}
+.input-wrapper label {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.input-with-icon {
+  display: flex;
+  align-items: center;
+  background-color: var(--input-bg, #1e1e1e);
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 4px 6px;
+  gap: 6px;
+  position: relative;
+}
+
+.input-with-icon input,
+.input-with-icon textarea,
+.input-with-icon select {
+  flex: 1;
+  color: inherit;
+  outline: none;
+  font-size: 1rem;
+  padding: 6px 4px;
+}
+
+.icon-box {
+  width: 28px;
+  height: 28px;
+  background-color: #2e2e2e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.icon-box img {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-speech,
+.btn-clear-input {
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.btn-speech img,
+.btn-clear-input img {
+  width: 16px;
+  height: 16px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .live-preview {
   font-style: italic;
@@ -1112,6 +1204,10 @@ textarea {
 .oculto {
   display: none;
 }
+
+
+
+
 
 
 
@@ -1137,6 +1233,7 @@ textarea {
 .input-with-speech input,
 .input-with-speech textarea {
   position: relative;
+  background-color: transparent;
   z-index: 2;
 }
 
@@ -1216,9 +1313,16 @@ input:-webkit-autofill {
 
 .row-group {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
 }
+
+.input-wrapper {
+  flex: 1 1 calc(50% - 0.5rem);
+  min-width: 180px; /* Opcional, para evitar que se aplasten demasiado en pantallas pequeñas */
+}
+
 
 .btn-group {
   justify-content: flex-end;
@@ -1552,6 +1656,7 @@ task-title-inline
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+
 .btn-complete {
   display: inline-flex;
   align-items: center;
