@@ -99,26 +99,40 @@ export function renderTasksGroupedByDate(tasks, year, month) {
       // Botón de estado a la derecha
       const completeBtn = document.createElement('button');
       completeBtn.classList.add('btn-complete');
-      if (task.completed) {
-        completeBtn.innerHTML = '✅';
-        completeBtn.classList.add('done');
-      } else {
-        completeBtn.innerHTML = '❌';
-        completeBtn.classList.add('pending');
+
+      // Función para actualizar el contenido del botón
+      function updateCompleteBtnContent() {
+        completeBtn.innerHTML = `
+          <img src="assets/icons/${task.completed ? 'circle-check-big.svg' : 'circle-x.svg'}"
+              alt="${task.completed ? 'Listo' : 'Pendiente'}"
+              class="icon-btn">
+          ${task.completed ? 'Listo' : 'Pendiente'}
+        `;
+        completeBtn.classList.toggle('done', task.completed);
+        completeBtn.classList.toggle('pending', !task.completed);
       }
+
+      // Inicializar contenido del botón
+      updateCompleteBtnContent();
+
       completeBtn.addEventListener('click', () => {
         task.completed = !task.completed;
+
         const updated = getTasks().map(t => t.id === task.id ? task : t);
         saveTasks(updated);
         renderTasksGroupedByDate(updated);
         updateTaskCounts();
+
         showToast(`"${task.title}" - ${task.completed ? 'Completada' : 'Pendiente'}`,
           task.completed ? 'success' : 'info');
+
+        // Actualizar visualmente
+        updateCompleteBtnContent();
       });
+
 
       // Armar fila final
       topRow.appendChild(leftSide);
-      topRow.appendChild(completeBtn);
       li.appendChild(topRow);
 
 
@@ -143,6 +157,9 @@ export function renderTasksGroupedByDate(tasks, year, month) {
 
       const buttonRow = document.createElement('div');
       buttonRow.classList.add('task-action-row');
+
+      // Mueve el botón de estado aquí y colócalo al principio
+      buttonRow.appendChild(completeBtn);
 
       const copyBtn = document.createElement('button');
       copyBtn.innerHTML = '<img src="./assets/icons/copy.svg" alt="Copiar" class="icon">';
@@ -199,7 +216,7 @@ export function renderTasksGroupedByDate(tasks, year, month) {
     taskList.appendChild(dateGroup);
   });
   updateTaskCounts(); // 
-renderTasksWithoutDate();
+  renderTasksWithoutDate();
 
 }
 

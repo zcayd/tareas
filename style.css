@@ -192,6 +192,9 @@ body.dark-mode {
 hr {
   border-color: var(--theme);
 }
+.borderTheme {
+  border: 2px solid var(--theme) !important;
+}
 
 /* Estilo base del botón */
 .btn-danger {
@@ -223,7 +226,8 @@ header {
   transition: max-height 0.4s ease;
   background-color: var(--bg-black);
   color: var(--bg-white) !important;
-  border-bottom: 2px solid var(--theme); /* 👈 Agregado */
+  border-bottom: 2px solid var(--theme);
+  /* 👈 Agregado */
 }
 
 
@@ -235,6 +239,7 @@ header {
   gap: 1rem;
   margin-bottom: 15px;
 }
+
 .header-bot {
   display: flex;
   align-items: center;
@@ -393,7 +398,18 @@ button:hover {
   /* o lo que necesites */
 }
 
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
 
+.filter-container select {
+
+  min-width: 0;
+  padding: 0.4rem;
+  box-sizing: border-box;
+}
 
 
 
@@ -417,12 +433,12 @@ button:hover {
 }
 
 #search-input {
-  flex: 1 1 250px;
   padding: 0.5rem;
   background-color: #010811;
   color: var(--bg-white, #fff);
   border-radius: 6px;
   min-width: 0;
+  width: 70% !important;
 }
 
 #btn-clear-filters {
@@ -1010,7 +1026,12 @@ button.active {
 
 
 /* Responsive: stack buttons below on small screens */
-@media (max-width: 700px) {
+@media (max-width: 600px) {
+  .filter-container select {
+    width: calc(50% - 0.25rem);
+  }
+
+  /* Otras reglas que ya tienes */
   .filter-buttons {
     flex-direction: column;
     align-items: stretch;
@@ -1027,14 +1048,13 @@ button.active {
     display: none;
   }
 
-input[type="text"],
-input[type="datetime-local"],
-input[type="select"],
-select {
-width: 100%;
+  input[type="text"],
+  input[type="datetime-local"],
+  select {
+    width: 100% !important;
+  }
 }
 
-}
 
 /* ===================================================
    🧪 PRIORITY
@@ -1062,6 +1082,7 @@ select {
   color: var(--bg-white, #fff);
   font-size: 1em;
   flex-grow: 1;
+   color-scheme: dark;
 }
 
 
@@ -1069,17 +1090,12 @@ textarea {
   padding: 5px;
   border: 1px solid var(--theme);
   border-radius: 6px;
-  background-color: #010811;
-  color: var(--bg-white, #fff);
   font-size: 1.2em;
   flex-grow: 1;
   resize: none;
-  /* <- importante */
   width: 80%;
   overflow: hidden;
-  /* <- importante */
   min-height: 50px;
-  /* opcional */
 }
 
 .input-titulo {
@@ -1169,6 +1185,7 @@ textarea {
   border-radius: 8px;
   color: #333;
 }
+
 .guia-dictado code {
   background: #e1e1e1;
   padding: 0 4px;
@@ -1345,29 +1362,23 @@ task-title-inline
 }
 
 /* EXCLUIR el btn-complete del efecto gris */
-.task-item.completed .btn-complete {
-  filter: none !important;
-  opacity: 1 !important;
-  background: linear-gradient(180deg, var(--bg-gray), var(--bg-darker)) !important;
-  border: 1px solid var(--bg-black);
-  color: white;
-}
+
 
 /* Prioridades normales */
 .priority-alta {
-  background-color: #fcdada;
+  background-color: #faeeee;
   border-left: 6px solid var(--alta);
   padding-left: 10px;
 }
 
 .priority-media {
-  background-color: #faefcc;
+  background-color: #f7f3e7;
   border-left: 6px solid var(--media);
   padding-left: 10px;
 }
 
 .priority-baja {
-  background-color: #cdfacd;
+  background-color: #ebfceb;
   border-left: 6px solid var(--baja);
   padding-left: 10px;
 }
@@ -1396,8 +1407,8 @@ task-title-inline
 
 /* Estado: Tarea no completada (verde) */
 .btn-complete.pending {
-  background: linear-gradient(180deg, var(--bg-gray), var(--bg-darker)) !important;
-  border: 1px solid var(--bg-black);
+  background: linear-gradient(180deg, var(--theme), var(--bg-darker)) !important;
+  border: 2px solid var(--theme);
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   opacity: 1 !important;
@@ -1405,8 +1416,8 @@ task-title-inline
 
 /* Estado: Tarea completada (gris oscuro) */
 .btn-complete.done {
-  background: linear-gradient(180deg, var(--bg-gray), var(--bg-darker)) !important;
-  border: 1px solid var(--bg-black);
+  background: linear-gradient(180deg, var(--bg-gray), var(--bg-black)) !important;
+  border: 2px solid var(--theme);
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   opacity: 1 !important;
@@ -1524,19 +1535,18 @@ task-title-inline
   cursor: pointer;
 }
 
-.btn-complete {
-  white-space: nowrap;
-  padding: 4px 8px;
-  font-size: 0.85rem;
-  margin: 0;
-}
+
 
 /* Botones de acciones */
 .task-action-row {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+.task-action-row .btn-complete {
+  margin-right: auto;
 }
 
 .task-buttons {
@@ -1544,6 +1554,21 @@ task-title-inline
   gap: 0.5rem;
   flex-wrap: wrap;
 }
+.btn-complete {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0.1rem 0.2rem;
+}
+
+.icon-btn {
+  width: 1rem;
+  height: 1rem;
+}
+
 
 
 
@@ -1999,61 +2024,69 @@ body[data-font-size="xlarge"] .task-time-inline {
 .task-column {
   flex: 1;
   overflow-y: auto;
-margin-bottom: 50px;
+  margin-bottom: 50px;
 
 }
+
 .task-column {
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .task-column::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  display: none;
+  /* Chrome/Safari */
 }
 
 .calendar-column {
   flex: 1;
-background: rgba(0, 0, 0, 0.5);
-border-radius: 8px;
-height: fit-content;
-padding: 1rem;
-margin: 0px 10px 0px 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  height: fit-content;
+  padding: 1rem;
+  margin: 0px 10px 0px 10px;
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
   max-width: 500px;
 }
-.Calendar-aside{
+
+.Calendar-aside {
   background: rgba(0, 0, 0, 0.5);
   border-radius: 8px;
-  padding: 1rem;  
+  padding: 1rem;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 2px solid var(--theme);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   flex-shrink: 0;
   overflow-y: auto;
-  flex: 0 0 350px;  
+  flex: 0 0 350px;
 }
+
 .list-sdate {
   background: rgba(0, 0, 0, 0.5);
   color: var(--bg-white);
   border-radius: 8px;
-  padding: 1rem;  
+  padding: 1rem;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 2px solid var(--theme);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   flex-shrink: 0;
   overflow-y: auto;
-  flex: 0 0 350px;  
+  flex: 0 0 350px;
 }
+
 .list-sdate h3 {
   margin-bottom: 10px;
 }
+
 .list-sdate ul {
   list-style-position: outside;
   padding-left: 1.2em;
   margin: 0;
   margin-bottom: 4px;
 }
+
 .list-sdate li {
   text-align: left;
   margin-bottom: 4px;

@@ -55,12 +55,12 @@
             <div class="offcanvas-body text-center">
                 <!-- Tamaño de fuente -->
                 <div class="PanelFonts">
-                    <button id="btn-increase-font" class="btn btn-outline-secondary">
-                        <img src="assets/icons/a-arrow-up.svg" alt="Aumentar fuente" width="20">
+                    <button id="btn-increase-font" class="borderTheme">
+                        <img src="assets/icons/a-arrow-up.svg" title="Aumentar fuente" alt="">
                     </button>
                     <span id="fontSizeLabel">Tamaño de Fuente</span>
-                    <button id="btn-decrease-font" class="btn btn-outline-secondary">
-                        <img src="assets/icons/a-arrow-down.svg" alt="Reducir fuente" width="20">
+                    <button id="btn-decrease-font" class="borderTheme">
+                        <img src="assets/icons/a-arrow-down.svg" title="Reducir fuente" alt="">
                     </button>
 
 
@@ -70,7 +70,7 @@
                 <hr>
                 <!-- Tema oscuro/claro -->
                 <div class="PanelMode">
-                    <button id="toggle-theme">
+                    <button id="toggle-theme" class="borderTheme">
                         <img id="theme-icon" src="assets/icons/moon.svg" width="18px" alt="Tema" />
                         <span>Modo claro</span>
                     </button>
@@ -81,7 +81,7 @@
                     <span class="SpanColor">Color del Tema</span>
                     <div id="colorContainer"></div>
                 </div>
-                <button id="reset-theme" class="btn reset-btn">Restaurar preferencias</button>
+                <button id="reset-theme" class="reset-btn borderTheme">Restaurar preferencias</button>
             </div>
             <div class="offcanvas-footer">
                 <span>© 2025 ZCAYD - & A.Z.</span>
@@ -117,7 +117,7 @@
                         <img src="assets/icons/brush-cleaning.svg" alt="">
                     </button>
                 </div>
-                <div>
+                <div class="filter-container">
                     <select id="filter-category">
                         <option value="">📂 Categorías</option>
                         <option value="personal">🔸Personal</option>
@@ -175,20 +175,21 @@
                 </div>
                 <div class="row-group">
                     <select id="task-category" name="categoria">
-                        <option value>Categoría</option>
-                        <option value="personal">Personal</option>
-                        <option value="trabajo">Trabajo</option>
-                        <option value="estudio">Estudio</option>
-                        <option value="compra">Compra</option>
-                        <option value="salud">Salud</option>
-                        <option value="iglesia">Iglesia</option>
-                        <option value="visita">Visita</option>
-                        <option value="otras">Otras</option>
+                        <option value="">📂 Categoría</option>
+                        <option value="personal">🔸Personal</option>
+                        <option value="trabajo">🔸Trabajo</option>
+                        <option value="estudio">🔸Estudio</option>
+                        <option value="compra">🔸Compra</option>
+                        <option value="salud">🔸Salud</option>
+                        <option value="iglesia">🔸Iglesia</option>
+                        <option value="visita">🔸Visita</option>
+                        <option value="otras">🔸Otras</option>
                     </select>
                     <select name="prioridad" id="task-priority">
-                        <option value="alta">Alta</option>
-                        <option value="media">Media</option>
-                        <option value="baja">Baja</option>
+                        <option value="">⚠️ Prioridad</option>
+                        <option value="alta">🔸Alta</option>
+                        <option value="media">🔸Media</option>
+                        <option value="baja">🔸Baja</option>
                     </select>
                 </div>
                 <div class="row-group">
