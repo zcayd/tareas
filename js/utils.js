@@ -1,7 +1,7 @@
 import { getTasks, saveTasks } from './storage.js';
 import { renderTasksGroupedByDate } from './render.js';
 import { updateTaskCounts } from './render.js';
-
+import { refreshAllCalendars } from './calendarModal.js';
 
 export function getPriorityColor(priority) {
   switch (priority) {
@@ -11,9 +11,6 @@ export function getPriorityColor(priority) {
     default: return '#bdc3c7';
   }
 }
-
-
-
 
 export function showToast(message, type = 'info') {
   const toastContainer = document.getElementById('toast-container') || createToastContainer();
@@ -39,7 +36,6 @@ export function showToast(message, type = 'info') {
   }, 4000);
 }
 
-
 function createToastContainer() {
   const container = document.createElement('div');
   container.id = 'toast-container';
@@ -58,16 +54,10 @@ export function showDeleteToast(task) {
 
   toast.innerHTML = `
     <div class="toast-header">
-    <span class="toast-title"><button class="close-toast" title="Cerrar">❌</button><strong>"${task.title}"<br></strong></span>
-      <p class="toast-message">¿Estás seguro?</p>
+    <span class="toast-title"><button class="close-toast" title="Cerrar">❌</button><strong>"${task.title}"</strong></span>
     </div>
-    <div class="toast-body">
-      
+    <div class="toast-body">      
       <div class="toast-actions">
-      
-      
-      
-      <br>
         <button class="btn-toast-confirm">Eliminar</button>
         <button class="btn-toast-cancel">Cancelar</button>
       </div>
@@ -82,6 +72,7 @@ export function showDeleteToast(task) {
     saveTasks(updatedTasks);
     renderTasksGroupedByDate(updatedTasks);
     updateTaskCounts();
+    refreshAllCalendars();
     toast.remove();
     showToast(`"${task.title}" -Eliminada`, 'danger');
   });
@@ -100,6 +91,8 @@ export function showDeleteToast(task) {
   setTimeout(() => {
     toast.remove();
   }, 8000);
+
+
 }
 
 

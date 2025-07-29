@@ -114,3 +114,26 @@ export function applyFilters() {
         group.style.display = hasVisibleTasks ? '' : 'none';
     });
 }
+
+
+
+
+
+export function getTasksByMonthWithNoDate(year, month) {
+  const allTasks = getTasks();
+  const byDate = [];
+  const noDate = [];
+
+  allTasks.forEach(task => {
+    if (task.date) {
+      const taskDate = new Date(task.date);
+      if (taskDate.getFullYear() === year && taskDate.getMonth() === month) {
+        byDate.push(task);
+      }
+    } else {
+      noDate.push(task);
+    }
+  });
+
+  return { byDate, noDate };
+}

@@ -1,10 +1,30 @@
 let currentTaskId = null;
 
+function ajustarAlturaTextarea() {
+    const textarea = document.getElementById('task-desc');
+    if (textarea) {
+        // Agrega el listener solo una vez
+        if (!textarea.dataset.listenerAdded) {
+            textarea.addEventListener('input', () => {
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            });
+            textarea.dataset.listenerAdded = 'true';
+        }
+
+        // Ajusta altura inicial
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+    }
+}
+
+
 export function initModal(modalId, formId, openBtnId, cancelBtnId) {
     const modal = document.getElementById(modalId);
     const form = document.getElementById(formId);
     const btnOpen = document.getElementById(openBtnId);
     const btnCancel = document.getElementById(cancelBtnId);
+    
     const modalBox = modal.querySelector('.modal-content');
     const modalTitle = modal.querySelector('#modal-title');
     const saveBtn = modal.querySelector('#btn-save');
@@ -16,7 +36,14 @@ export function initModal(modalId, formId, openBtnId, cancelBtnId) {
 
         modalTitle.textContent = 'Nueva Tarea';
         saveBtn.textContent = 'Guardar';
+
+        setTimeout(ajustarAlturaTextarea, 50);
+
     };
+
+    
+
+
 
     const closeModal = () => {
         modalBox.classList.remove('scale-100', 'opacity-100');
@@ -26,6 +53,10 @@ export function initModal(modalId, formId, openBtnId, cancelBtnId) {
             form.reset();
         }, 200);
     };
+
+    // 🔽 Mueve esto aquí después de declarar closeModal
+    const btnClose = modal.querySelector('#btn-close-modal');
+    btnClose?.addEventListener('click', closeModal);
 
     btnOpen?.addEventListener('click', openModal);
     btnCancel?.addEventListener('click', closeModal);
@@ -47,7 +78,6 @@ export function openModalWithData(task, modalId, formId) {
     const modalBox = modal.querySelector('.modal-content');
     const modalTitle = modal.querySelector('#modal-title');
     const saveBtn = modal.querySelector('#btn-save');
-
     modal.classList.remove('hidden');
     modalBox.classList.remove('scale-95', 'opacity-0');
     modalBox.classList.add('scale-100', 'opacity-100');
@@ -58,12 +88,15 @@ export function openModalWithData(task, modalId, formId) {
     document.getElementById('task-priority').value = task.priority;
     document.getElementById('task-date').value = task.date;
     document.getElementById('task-time').value = task.time;
-
     // Cambiar título y botones
     modalTitle.textContent = 'Editar Tarea';
     saveBtn.textContent = 'Actualizar';
-
     currentTaskId = task.id;
+
+    // ✨ Auto-resize al abrir con datos
+    setTimeout(ajustarAlturaTextarea, 100);
+
+
 }
 
 export function getCurrentTaskId() {
@@ -73,5 +106,3 @@ export function getCurrentTaskId() {
 export function clearCurrentTaskId() {
     currentTaskId = null;
 }
-
-

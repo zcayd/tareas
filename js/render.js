@@ -1,12 +1,16 @@
 import { getTasks, saveTasks, deleteTask } from './storage.js';
 import { showToast, showDeleteToast } from './utils.js';
 import { openModalWithData } from './modal.js';
+import { filterTasksByMonth } from './calendarMonthFilter.js';
 
 
-
-export function renderTasksGroupedByDate(tasks) {
+export function renderTasksGroupedByDate(tasks, year, month) {
   const taskList = document.getElementById('task-list');
   taskList.innerHTML = '';
+
+  if (year !== undefined && month !== undefined) {
+    tasks = filterTasksByMonth(tasks, year, month);
+  }
 
   if (tasks.length === 0) {
     taskList.innerHTML = '<p>No hay tareas aún.</p>';
@@ -56,16 +60,43 @@ export function renderTasksGroupedByDate(tasks) {
       const topRow = document.createElement('div');
       topRow.classList.add('task-top-row');
 
+      // NUEVO: contenedor para el lado izquierdo
+      const leftSide = document.createElement('div');
+      leftSide.classList.add('task-left');
+
+
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
       checkbox.classList.add('task-export-checkbox');
       checkbox.dataset.id = task.id;
       checkbox.name = `task-${task.id}`;
 
+
+      // Título y hora
+      const titleContainer = document.createElement('div');
+      titleContainer.classList.add('task-title-container');
+
       const titleSpan = document.createElement('span');
       titleSpan.classList.add('task-title-inline');
       titleSpan.textContent = task.title;
 
+      titleContainer.appendChild(titleSpan);
+
+      if (task.time) {
+        const timeSpan = document.createElement('span');
+        timeSpan.classList.add('task-time-inline');
+        timeSpan.textContent = `- ${convertirHoraAMPM(task.time)}`;
+        titleContainer.appendChild(timeSpan);
+      }
+
+
+
+
+      // Estructura izquierda: [checkbox] [título + hora]
+      leftSide.appendChild(checkbox);
+      leftSide.appendChild(titleContainer);
+
+      // Botón de estado a la derecha
       const completeBtn = document.createElement('button');
       completeBtn.classList.add('btn-complete');
       if (task.completed) {
@@ -80,14 +111,13 @@ export function renderTasksGroupedByDate(tasks) {
         const updated = getTasks().map(t => t.id === task.id ? task : t);
         saveTasks(updated);
         renderTasksGroupedByDate(updated);
-        updateTaskCounts(); // 👈✅ agrega esta línea
+        updateTaskCounts();
         showToast(`"${task.title}" - ${task.completed ? 'Completada' : 'Pendiente'}`,
           task.completed ? 'success' : 'info');
-
       });
 
-      topRow.appendChild(checkbox);
-      topRow.appendChild(titleSpan);
+      // Armar fila final
+      topRow.appendChild(leftSide);
       topRow.appendChild(completeBtn);
       li.appendChild(topRow);
 
@@ -163,21 +193,13 @@ export function renderTasksGroupedByDate(tasks) {
       buttonRow.appendChild(deleteBtn);
       li.appendChild(buttonRow);
 
-
-
-
-
-      const datetime = document.createElement('div');
-      datetime.classList.add('task-datetime');
-      datetime.textContent = `🗓️ ${formatDateTime(task.date, task.time)}`;
-      li.appendChild(datetime);
-
       dateGroup.appendChild(clone);
     });
 
     taskList.appendChild(dateGroup);
   });
   updateTaskCounts(); // 
+renderTasksWithoutDate();
 
 }
 
@@ -219,7 +241,7 @@ export function formatDateTime(dateStr, timeStr) {
 }
 
 function getDateGroupStatus(dateStr, timeStr = '00:00') {
-  if (dateStr === 'Sin fecha 💤') return 'future';
+  if (dateStr === 'Sin fecha 💤') return 'sdate';
 
   const now = new Date();
   const [year, month, day] = dateStr.split('-');
@@ -237,10 +259,6 @@ function getDateGroupStatus(dateStr, timeStr = '00:00') {
 
   return 'future';
 }
-
-
-
-
 
 
 function pluralizar(cantidad, singular, plural) {
@@ -271,4 +289,37 @@ export function updateTaskCounts() {
 
 function capitalize(text) {
   return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+
+
+function convertirHoraAMPM(hora24) {
+  const [hora, minutos] = hora24.split(':');
+  const h = parseInt(hora, 10);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  const hora12 = h % 12 || 12;
+  return `${hora12}:${minutos.padStart(2, '0')} ${ampm}`;
+}
+
+
+
+export function renderTasksWithoutDate() {
+  const tasks = getTasks();
+  const tasksWithoutDate = tasks.filter(t => !t.date);
+  const container = document.getElementById('aside-tasks-without-date-list');
+
+  if (!container) return;
+
+  const ul = document.createElement('ul');
+  ul.style.paddingLeft = '1em';
+
+  tasksWithoutDate.forEach(task => {
+    const li = document.createElement('li');
+    li.textContent = task.title;
+    li.classList.add('task-without-date-item');
+    ul.appendChild(li);
+  });
+
+  container.innerHTML = '<h3>📌 Tareas sin fecha:</h3>';
+  container.appendChild(ul);
 }

@@ -2,18 +2,22 @@ import { getTasks, saveTasks, deleteTask } from './storage.js';
 import { renderTasksGroupedByDate, formatDateTime, updateTaskCounts } from './render.js';
 import { initModal, openModalWithData, getCurrentTaskId, clearCurrentTaskId } from './modal.js';
 import { initFilters, applyFilters } from './filters.js';
-import { showToast } from './utils.js';
-import { showInstallToastOncePerDay } from './utils.js';
+import { showToast, showInstallToastOncePerDay } from './utils.js';
+import { openCalendarModal, setupCalendarModal, renderCalendar, refreshAllCalendars } from './calendarModal.js';
+import { initSpeechRecognition } from './speechRecognition.js';
+
+
+
+
 // 🛠 Inicializa tareas en pantalla
 const tasks = getTasks();
-renderTasksGroupedByDate(tasks);
+renderTasksGroupedByDate(tasks, undefined, undefined);
 updateTaskCounts();
-
 
 
 document.addEventListener('DOMContentLoaded', () => {
   const tasks = getTasks();
-  renderTasksGroupedByDate(tasks);
+  renderTasksGroupedByDate(tasks, undefined, undefined);
   updateTaskCounts();
   initModal('task-modal', 'task-form', 'btn-open', 'btn-cancel');
 
@@ -64,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTasksGroupedByDate(updatedTasks);
     updateTaskCounts();
     applyFilters();
+    refreshAllCalendars();
 
     // ✅ Alerta toast
     showToast(
@@ -147,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  
+
 
   // Detectar estado inicial
   window.addEventListener('load', updateConnectionStatus);
@@ -217,6 +222,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+  setupCalendarModal();
+
+  document.getElementById('btn-calendar').addEventListener('click', () => {
+    if (window.innerWidth <= 768) {
+      // Móvil: mostrar modal
+      document.getElementById('calendar-modal').classList.remove('hidden');
+      renderCalendar(new Date()); // ✅ solo 1 argumento
+    } else {
+      // Desktop: ya está visible a la derecha, solo actualizar
+      renderCalendar(new Date()); // ✅ solo 1 argumento
+    }
+  });
+
+  renderCalendar(new Date()); // ✅ OK
+  renderCalendar(new Date(), '#aside-calendar-grid', '#aside-calendar-month-label');
+
+  initSpeechRecognition('task-title', 'btn-speech-title');
+  initSpeechRecognition('task-desc', 'btn-speech-desc');
+
+  document.getElementById('btn-clear-title')?.addEventListener('click', () => {
+    document.getElementById('task-title').value = '';
+    document.getElementById('task-title').focus();
+  });
+
+  document.getElementById('btn-clear-desc')?.addEventListener('click', () => {
+    document.getElementById('task-desc').value = '';
+    document.getElementById('task-desc').focus();
+  });
+
+
+
+
+
+
+
 });
 
 
@@ -278,3 +318,28 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const textarea = document.getElementById('task-desc');
+if (textarea) {
+  const autoResize = (el) => {
+    el.style.height = 'auto';
+    el.style.height = el.scrollHeight + 'px';
+  };
+
+  textarea.addEventListener('input', () => autoResize(textarea));
+  autoResize(textarea); // ajuste inicial
+}

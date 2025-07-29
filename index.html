@@ -7,18 +7,18 @@
     <title>Mis Tareas</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/offcanvas.css">
     <meta name="theme-color" content="#007bff">
     <link rel="manifest" href="manifest.json">
 
-
+    <style>
+        .oculto {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- <div id="splash-screen">
-        <img src="assets/img/to-do.png" alt="Logo" class="splash-logo">
-        <p id="splash-greeting">Cargando...</p>
-    </div>-->
-
     <header>
         <div class="header-top">
             <h1>
@@ -27,81 +27,155 @@
                     <span id="connection-status">＋</span>
                 </button>
             </h1>
-            <button id="toggle-theme">
-                <img id="theme-icon" src="assets/icons/moon.svg" alt="Tema" />
-            </button>
-            <button id="btn-copy-selected"><img src="assets/icons/copy.svg" alt=""></button>
-            <button id="btn-share-selected"><img src="assets/icons/share.svg" alt=""></button>
+            <button id="abrirOffcanvas"><img src="assets/icons/settings.svg" class="rotating" alt></button>
         </div>
-        <div class="controls">
-            <button id="toggle-filters" class="accordion accfiltrar">FILTRAR</button>
-            <div class="panel filters-panel">
-                <div class="filters-container">
-                    <div class="search-bar">
-                        <input type="text" id="search-input"
-                            placeholder="Buscar título, descripción, categoría o fecha" />
-                        <button id="btn-clear-filters"><img src="assets/icons/danger.svg" alt=""></button>
-                    </div>
-                    <div>
-                        <select id="filter-category">
-                            <option value="">📂 Categorías</option>
-                            <option value="personal">🔸Personal</option>
-                            <option value="trabajo">🔸Trabajo</option>
-                            <option value="estudio">🔸Estudio</option>
-                            <option value="compra">🔸Compra</option>
-                            <option value="salud">🔸Salud</option>
-                            <option value="iglesia">🔸Iglesia</option>
-                            <option value="visita">🔸Visita</option>
-                            <option value="otros">🔸Otros</option>
-                        </select>
-                        <select id="filter-priority">
-                            <option value="">⚠️ Prioridad</option>
-                            <option value="alta">🔸 Alta</option>
-                            <option value="media">🔸 Media</option>
-                            <option value="baja">🔸 Baja</option>
-                        </select>
-                        <select id="filter-date">
-                            <option value="">📅 Fechas</option>
-                            <option value="past">🔸 Pasadas</option>
-                            <option value="today">🔸 Hoy</option>
-                            <option value="future">🔸 Futuras</option>
-                        </select>
-                        <select id="filter-status">
-                            <option value="">🕒 Estado</option>
-                            <option value="completed">✅ Listos</option>
-                            <option value="pending">⏳ Pendientes</option>
-                        </select>
+        <div class="header-bot">
+            <div id="font-controls">
+                <button id="btn-calendar"><img src="assets/icons/calendar.svg" alt></button>
+                <button id="btn-toggle-filters"><img src="assets/icons/list-filter.svg" alt></button>
 
+
+            </div>
+            <div>
+                <button id="btn-copy-selected"><img src="assets/icons/copy.svg" alt></button>
+                <button id="btn-share-selected"><img src="assets/icons/share.svg" alt></button>
+            </div>
+        </div>
+        <!-- OffCanvas Ajustes -->
+        <div id="offcanvas" class="offcanvas">
+            <div class="offcanvas-header">
+                <div class="titulo-con-icono">
+                    <img src="assets/icons/settings.svg" alt="icono" class="icono-svg">
+                    <h3>Panel de Ajustes</h3>
+                </div>
+                <button id="cerrarOffcanvas" class="cerrar-btn">
+                    <img src="assets/icons/danger.svg">
+                </button>
+            </div>
+            <div class="offcanvas-body text-center">
+                <!-- Tamaño de fuente -->
+                <div class="PanelFonts">
+                    <button id="btn-increase-font" class="btn btn-outline-secondary">
+                        <img src="assets/icons/a-arrow-up.svg" alt="Aumentar fuente" width="20">
+                    </button>
+                    <span id="fontSizeLabel">Tamaño de Fuente</span>
+                    <button id="btn-decrease-font" class="btn btn-outline-secondary">
+                        <img src="assets/icons/a-arrow-down.svg" alt="Reducir fuente" width="20">
+                    </button>
+
+
+
+
+                </div>
+                <hr>
+                <!-- Tema oscuro/claro -->
+                <div class="PanelMode">
+                    <button id="toggle-theme">
+                        <img id="theme-icon" src="assets/icons/moon.svg" width="18px" alt="Tema" />
+                        <span>Modo claro</span>
+                    </button>
+                </div>
+                <hr>
+                <!-- Solo contenedor limpio -->
+                <div class="PanelColors text-center">
+                    <span class="SpanColor">Color del Tema</span>
+                    <div id="colorContainer"></div>
+                </div>
+                <button id="reset-theme" class="btn reset-btn">Restaurar preferencias</button>
+            </div>
+            <div class="offcanvas-footer">
+                <span>© 2025 ZCAYD - & A.Z.</span>
+            </div>
+        </div>
+        <!-- Calendario Modal (solo para móviles) -->
+        <div id="calendar-modal" class="calendar-modal hidden">
+            <div class="calendar-modal-content">
+                <!-- Fila de encabezado -->
+                <div class="calendar-header-row">
+                    <h2 id="calendar-title">📅 Calendario</h2>
+                    <div class="calendar-header-buttons">
+                        <button id="modal-today-btn"><img src="assets/icons/CalendarCheck.svg" alt></button>
+                        <button class="calendar-close-btn">
+                            <img src="assets/icons/danger.svg">
+                        </button>
                     </div>
                 </div>
+                <div class="calendar-nav">
+                    <button id="prev-month"><img src="assets/icons/circle-chevron-left.svg" alt></button>
+                    <span id="calendar-month-label"></span>
+                    <button id="next-month"><img src="assets/icons/circle-chevron-right.svg" alt></button>
+                </div>
+                <div id="calendar-grid" class="calendar-grid"></div>
             </div>
-            <script>
-                var acc = document.getElementsByClassName("accordion");
-                var i;
-
-                for (i = 0; i < acc.length; i++) {
-                    acc[i].addEventListener("click", function () {
-                        this.classList.toggle("active");
-                        var panel = this.nextElementSibling;
-                        if (panel.style.maxHeight) {
-                            panel.style.maxHeight = null;
-                        } else {
-                            panel.style.maxHeight = panel.scrollHeight + "px";
-                        }
-                    });
-                }
-            </script>
         </div>
+        <!-- Panel de filtros oculto por defecto -->
+        <div id="filters-panel" class="panel filters-panel oculto">
+            <div class="filters-container">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Buscar título, descripción, categoría o fecha" />
+                    <button id="btn-clear-filters" title="Borrar Filtros">
+                        <img src="assets/icons/brush-cleaning.svg" alt="">
+                    </button>
+                </div>
+                <div>
+                    <select id="filter-category">
+                        <option value="">📂 Categorías</option>
+                        <option value="personal">🔸Personal</option>
+                        <option value="trabajo">🔸Trabajo</option>
+                        <option value="estudio">🔸Estudio</option>
+                        <option value="compra">🔸Compra</option>
+                        <option value="salud">🔸Salud</option>
+                        <option value="iglesia">🔸Iglesia</option>
+                        <option value="visita">🔸Visita</option>
+                        <option value="otros">🔸Otros</option>
+                    </select>
+                    <select id="filter-priority">
+                        <option value="">⚠️ Prioridad</option>
+                        <option value="alta">🔸 Alta</option>
+                        <option value="media">🔸 Media</option>
+                        <option value="baja">🔸 Baja</option>
+                    </select>
+                    <select id="filter-date">
+                        <option value="">📅 Fechas</option>
+                        <option value="past">🔸 Pasadas</option>
+                        <option value="today">🔸 Hoy</option>
+                        <option value="future">🔸 Futuras</option>
+                    </select>
+                    <select id="filter-status">
+                        <option value="">🕒 Estado</option>
+                        <option value="completed">✅ Listos</option>
+                        <option value="pending">⏳ Pendientes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <script>
+            const btnToggleFilters = document.getElementById('btn-toggle-filters');
+            const filtersPanel = document.getElementById('filters-panel');
+
+            btnToggleFilters.addEventListener('click', () => {
+                filtersPanel.classList.toggle('oculto');
+            });
+        </script>
     </header>
-    <!-- Modal -->
+    <!-- Modal de nueva tarea -->
     <div id="task-modal" class="modal hidden">
-        <div class="modal-content ">
+        <div class="modal-content">
+            <button type="button" id="btn-close-modal" class="btn-close-modal">
+                <img src="assets/icons/danger.svg" alt="Cerrar" class="icon-btn">
+            </button>
             <h2 id="modal-title">Nueva Tarea</h2>
             <form id="task-form" class="form-task">
-                <input type="text" id="task-title" name="titulo" placeholder="Título" required />
+                <div class="input-with-speech">
+                    <input type="text" id="task-title" name="titulo" placeholder="Título" class="input-titulo" required>
+                    <button type="button" id="btn-speech-title" class="btn-speech"></button>
+                    <button type="button" id="btn-clear-title" class="btn-clear-input">
+                        <img src="assets/icons/trash.svg" alt="Borrar" class="icon-btn">
+                    </button>
+                </div>
                 <div class="row-group">
                     <select id="task-category" name="categoria">
-                        <option value="">Categoría</option>
+                        <option value>Categoría</option>
                         <option value="personal">Personal</option>
                         <option value="trabajo">Trabajo</option>
                         <option value="estudio">Estudio</option>
@@ -111,9 +185,8 @@
                         <option value="visita">Visita</option>
                         <option value="otras">Otras</option>
                     </select>
-
                     <select name="prioridad" id="task-priority">
-                        <option class="borde-urgente" value="alta">Alta</option>
+                        <option value="alta">Alta</option>
                         <option value="media">Media</option>
                         <option value="baja">Baja</option>
                     </select>
@@ -122,47 +195,74 @@
                     <input type="date" id="task-date" name="fecha" />
                     <input type="time" id="task-time" name="hora" />
                 </div>
-                <textarea id="task-desc" name="descripcion" placeholder="Descripción"></textarea>
+                <div class="input-with-speech">
+                    <textarea id="task-desc" name="descripcion" placeholder="Descripción"></textarea>
+
+
+                    <button type="button" id="btn-speech-desc" class="btn-speech"></button>
+                    <button type="button" id="btn-clear-desc" class="btn-clear-input"><img src="assets/icons/trash.svg"
+                            alt="Borrar" class="icon-btn"></button>
+                </div>
                 <div class="row-group btn-group">
                     <button type="button" id="btn-cancel" class="btn-cancelar">Cancelar</button>
                     <button type="submit" id="btn-save" class="btn-guardar">Guardar</button>
                 </div>
             </form>
+            <div id="dictado-preview-global" class="dictado-flotante"></div>
+
         </div>
     </div>
-    <main>
-        <template id="task-template">
-            <li class="task-item">
-                <div class="task-action-row">
-                    <div class="task-buttons"></div>
-                    <button class="btn-delete-inline"></button>
+    <!-- Contenedor principal en 2 columnas -->
+    <main class="main-layout">
+        <section class="task-column">
+            <template id="task-template">
+                <li class="task-item">
+                    <div class="task-action-row">
+                        <div class="task-buttons"></div>
+                        <button class="btn-delete-inline"></button>
+                    </div>
+                </li>
+            </template>
+            <ul id="task-list"></ul>
+        </section>
+        <aside class="calendar-column" id="calendar-sidebar">
+            <div class="Calendar-aside">
+                <div id="calendar-header" class="calendar-header">
+                    <button id="toggle-aside-position" title="Cambiar de lado">
+                        <img src="assets/icons/arrow-right-left.svg" alt>
+                    </button>
+                    <button id="aside-prev-month"><img src="assets/icons/circle-chevron-left.svg" alt></button>
+                    <span id="aside-calendar-month-label"></span>
+                    <button id="aside-next-month"><img src="assets/icons/circle-chevron-right.svg" alt></button>
+                    <button id="aside-today-btn"><img src="assets/icons/CalendarCheck.svg" alt></button>
                 </div>
-            </li>
-        </template>
-        <ul id="task-list"></ul>
+                <div id="aside-calendar-grid" class="calendar-grid"></div>
+            </div>
+
+            <div id="aside-tasks-without-date-list" class="list-sdate"></div>
+
+        </aside>
     </main>
     <footer>
         <div class="footer-top">
-            <div id="task-completed">Completadas: 0</div>|
+            <div id="task-completed">Completadas: 0</div> |
             <div id="task-pending">Pendientes: 0</div>
         </div>
         <div class="footer-bottom">
             <span>© 2025 ZCAYD - & A.Z.</span>
-            <br>
-            <span>Todos los derechos reservados.</span>
-            <br>
-            <!-- Coloca esto en tu HTML principal -->
             <button id="btn-install" style="display: none;"></button>
-
-
         </div>
     </footer>
     <div id="toast-container"></div>
+    <!-- Scripts -->
     <script type="module" src="./js/utils.js"></script>
     <script type="module" src="./js/main.js"></script>
-    <script src="js/theme.js"></script>
-    <script src="regist_serviceWorker.js"></script>
+    <script type="module" src="js/theme.js"></script>
+    <script src="js/offcanvas.js"></script>
+    <script type="module" src="js/asidePosition.js"></script>
 
+
+    <script src="regist_serviceWorker.js"></script>
 </body>
 
 </html>

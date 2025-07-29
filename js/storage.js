@@ -25,9 +25,43 @@ export function deleteTask(id) {
   saveTasks(tasks); // ✅ usa la función centralizada
   
   updateTaskCounts();
-
+refreshAllCalendars(); 
 }
 
 
 
 
+export function getTasksForMonthOrNoDate(year, month) {
+  const tasks = getTasks();
+
+  return tasks.filter(task => {
+    if (!task.dueDate) return true;
+
+    const date = new Date(task.dueDate);
+    return date.getFullYear() === year && date.getMonth() === month;
+  });
+}
+
+
+
+export function getTasksByMonthWithNoDate(year, month) {
+  const tasks = getTasks();
+
+  const filtered = {
+    byDate: [],
+    noDate: []
+  };
+
+  for (const task of tasks) {
+    if (!task.dueDate) {
+      filtered.noDate.push(task);
+    } else {
+      const date = new Date(task.dueDate);
+      if (date.getFullYear() === year && date.getMonth() === month) {
+        filtered.byDate.push(task);
+      }
+    }
+  }
+
+  return filtered;
+}
