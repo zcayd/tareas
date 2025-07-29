@@ -1010,13 +1010,20 @@ button.active {
 
 
 /* Responsive: stack buttons below on small screens */
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .filter-buttons {
     flex-direction: column;
     align-items: stretch;
   }
 
   .m-rl {
+    display: none;
+  }
+
+  #btn-speech-title,
+  #btn-speech-desc,
+  #btn-clear-title,
+  #btn-clear-desc {
     display: none;
   }
 
