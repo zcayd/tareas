@@ -1027,6 +1027,11 @@ button.active {
     display: none;
   }
 
+input[type="text"],
+input[type="datetime-local"] {
+width: 100%;
+}
+
 }
 
 /* ===================================================
