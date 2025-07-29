@@ -2314,7 +2314,7 @@ body[data-font-size="xlarge"] .task-time-inline {
 }
 
 .has-task {
-  background-color: var(--bg-warning-dark);
+  background-color: var(--bg-warning-hover);
   color: var(--bg-white);
 }
 
