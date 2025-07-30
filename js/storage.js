@@ -1,52 +1,55 @@
 const STORAGE_KEY = 'agenda_tareas';
 
+
+import { getUsuarioActual } from './usuarios.js';
+
+// 🔑 Clave dinámica según usuario activo
+function getClaveTareas() {
+  const usuario = getUsuarioActual() || 'invitado';
+  return `tareas_${usuario}`;
+}
+
+// ✅ Obtener tareas del usuario actual
 export function getTasks() {
-  const data = localStorage.getItem(STORAGE_KEY);
+  const data = localStorage.getItem(getClaveTareas());
   return data ? JSON.parse(data) : [];
 }
 
+// ✅ Guardar todas las tareas del usuario actual
 export function saveTasks(tasks) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+  localStorage.setItem(getClaveTareas(), JSON.stringify(tasks));
 }
 
+// ✅ Guardar una sola tarea nueva
 export function saveTask(task) {
   const tasks = getTasks();
   tasks.push(task);
   saveTasks(tasks);
 }
 
-export function loadTasks() {
-  return getTasks(); // opcional, puedes simplemente usar getTasks directamente
-}
-
-
+// ✅ Eliminar tarea por ID
 export function deleteTask(id) {
   const tasks = getTasks().filter(task => task.id !== id);
-  saveTasks(tasks); // ✅ usa la función centralizada
-  
-  updateTaskCounts();
-refreshAllCalendars(); 
+  saveTasks(tasks);
+
+  // Llama tus funciones auxiliares si están definidas globalmente
+  if (typeof updateTaskCounts === 'function') updateTaskCounts();
+  if (typeof refreshAllCalendars === 'function') refreshAllCalendars();
 }
 
-
-
-
+// ✅ Obtener tareas con o sin fecha de un mes
 export function getTasksForMonthOrNoDate(year, month) {
   const tasks = getTasks();
-
   return tasks.filter(task => {
     if (!task.dueDate) return true;
-
     const date = new Date(task.dueDate);
     return date.getFullYear() === year && date.getMonth() === month;
   });
 }
 
-
-
+// ✅ Separar tareas con fecha y sin fecha para un mes
 export function getTasksByMonthWithNoDate(year, month) {
   const tasks = getTasks();
-
   const filtered = {
     byDate: [],
     noDate: []
@@ -64,4 +67,9 @@ export function getTasksByMonthWithNoDate(year, month) {
   }
 
   return filtered;
+}
+
+// ✅ Alias opcional para usar como "cargar"
+export function loadTasks() {
+  return getTasks();
 }

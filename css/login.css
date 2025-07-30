@@ -1,0 +1,146 @@
+/* Styles for the new login layout based on the provided image */
+
+/* Outer overlay - keeping existing styles */
+#login-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2); /* Slightly lighter overlay */
+  backdrop-filter: blur(5px); /* Keep blur effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Modal container */
+.login-container-simple {
+  background-color: var(--bg-darker); /* Dark background from image */
+  border: 2px solid var(--theme);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.9); /* Subtle shadow */
+  width: 350px; /* Fixed width */
+  padding: 15px;
+  color: #e5e7eb; /* Light text */
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Spacing between elements */
+  align-items: center; /* Center content horizontally */
+  animation: fadeInDown 0.4s ease-out forwards; /* Animation */
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-title-simple {
+  font-size: 2rem;
+  font-weight: bold;
+  color:  var(--theme);
+}
+
+.form-label-simple {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #9ca3af; /* Lighter gray for labels */
+  margin-bottom: 8px;
+}
+
+.form-group {
+  width: 100%; /* Ensure form groups take full width */
+}
+
+.input-group-simple {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between select and delete button */
+}
+
+.form-input-simple {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 6px;
+  color: #e5e7eb;
+  outline: none;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-input-simple::placeholder {
+  color: #6b7280; /* Placeholder color */
+}
+
+.form-input-simple:focus {
+  border: 3px solid var(--theme);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3); /* Teal glow on focus */
+}
+
+.select-user-simple {
+  flex-grow: 1; /* Allow select to take available space */
+}
+
+.action-button-simple {
+  background: linear-gradient(180deg, var(--bg-danger-hover), var(--bg-danger-dark));
+  border: 2px solid var(--bg-danger);
+  padding: 12px 15px;
+  border-radius: 6px;
+  color: #f87171; /* Red for delete */
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-button-simple:hover {
+  filter: brightness(1.2);
+}
+
+.delete-button-simple {
+  /* Specific styles for delete button if needed, otherwise inherits from action-button-simple */
+}
+
+.button-group-simple {
+  display: flex;
+  gap: 15px; /* Space between buttons */
+  width: 100%; /* Make button group take full width */
+  justify-content: center; /* Center buttons */
+      margin-top: 10px;
+}
+
+.form-button-simple {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+  flex-grow: 1; /* Allow buttons to grow and share space */
+  text-align: center;
+}
+
+.clear-button-simple {
+  background: linear-gradient(180deg, var(--theme), var(--bg-darker)) !important;
+  border: 2px solid var(--theme);
+  color: #fff;
+}
+
+.clear-button-simple:hover {
+  filter: brightness(1.2);
+}
+
+.enter-button-simple {
+  background: linear-gradient(180deg, var(--bg-success-dark), var(--bg-success-hover));
+  border: 2px solid var(--bg-success);
+  color: #fff;
+}
+
+.enter-button-simple:hover {
+  filter: brightness(1.2);
+}

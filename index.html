@@ -10,6 +10,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="css/offcanvas.css">
+    <link rel="stylesheet" href="css/login.css">
     <meta name="theme-color" content="#007bff">
     <link rel="manifest" href="manifest.json">
 
@@ -35,20 +36,20 @@
             <div id="font-controls">
                 <button id="btn-calendar"><img src="assets/icons/calendar.svg" alt></button>
                 <button id="btn-toggle-filters"><img src="assets/icons/list-filter.svg" alt></button>
-
-
+                
             </div>
             <div>
                 <button id="btn-copy-selected"><img src="assets/icons/copy.svg" alt></button>
                 <button id="btn-share-selected"><img src="assets/icons/share.svg" alt></button>
             </div>
+
         </div>
         <!-- OffCanvas Ajustes -->
         <div id="offcanvas" class="offcanvas">
             <div class="offcanvas-header">
                 <div class="titulo-con-icono">
-                    <img src="assets/icons/settings.svg" alt="icono" class="icono-svg">
-                    <h3>Panel de Ajustes</h3>
+                    <img src="assets/icons/circle-user-round.svg" alt="icono" class="icono-svg">
+                    <h3><div id="usuario-activo"></div></h3>
                 </div>
                 <button id="cerrarOffcanvas" class="cerrar-btn">
                     <img src="assets/icons/danger.svg">
@@ -86,7 +87,7 @@
                 <button id="reset-theme" class="reset-btn borderTheme">Restaurar preferencias</button>
             </div>
             <div class="offcanvas-footer">
-                <span>© 2025 ZCAYD - & A.Z.</span>
+                <button onclick="cerrarSesion()" id="cerrarSesion">Cerrar sesión</button>
             </div>
         </div>
         <!-- Calendario Modal (solo para móviles) -->
@@ -325,6 +326,35 @@
 
 
     <script src="regist_serviceWorker.js"></script>
+
+    <script type="module">
+        import { getUsuarioActual, eliminarUsuarioActual } from "./js/usuarios.js";
+        import { mostrarPantallaLogin } from "./js/login.js";
+
+        const usuario = getUsuarioActual();
+
+        if (!usuario) {
+            // Si no hay sesión iniciada, muestra la ventana de login emergente
+            mostrarPantallaLogin(() => {
+                location.reload(); // recarga el index una vez iniciado
+            });
+        } else {
+            // Mostrar nombre de usuario en la UI
+            const divUsuario = document.getElementById('usuario-activo');
+            if (divUsuario) {
+                divUsuario.textContent = ' ' + usuario;
+            }
+
+            // Agregar botón para cerrar sesión
+            window.cerrarSesion = () => {
+                eliminarUsuarioActual();
+                location.reload(); // recargar para volver a pedir login
+            };
+        }
+    </script>
+
+
+
 </body>
 
 </html>

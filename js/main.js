@@ -8,6 +8,33 @@ import { initSpeechRecognition } from './speechRecognition.js';
 
 
 
+import { mostrarPantallaLogin } from "./login.js";
+import { getClaveTareas, cerrarSesion, getUsuarioActual } from "./usuarios.js";
+
+
+window.cerrarSesion = () => cerrarSesion(mostrarPantallaLogin);
+
+
+
+// === Función para cargar tareas ===
+function cargarTareasUsuario() {
+  const clave = getClaveTareas();
+  const data = localStorage.getItem(clave);
+  const tareas = data ? JSON.parse(data) : [];
+  renderTasksGroupedByDate(tareas, undefined, undefined);
+updateTaskCounts();
+ // ← Reutiliza tu función actual
+}
+
+// === Función para guardar tareas ===
+function guardarTareasUsuario(tareas) {
+  const clave = getClaveTareas();
+  localStorage.setItem(clave, JSON.stringify(tareas));
+}
+
+
+
+
 
 // 🛠 Inicializa tareas en pantalla
 const tasks = getTasks();
@@ -16,6 +43,8 @@ updateTaskCounts();
 
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Removed redundant call to mostrarPantallaLogin
+
   const tasks = getTasks();
   renderTasksGroupedByDate(tasks, undefined, undefined);
   updateTaskCounts();
